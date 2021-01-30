@@ -1,0 +1,1394 @@
+% Welcome to the LaTex YSC1212 template that I prepared for our group submissions!
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{erewhon} %
+ \usepackage{quoting} %
+\usepackage{lipsum}
+%\usepackage[margin=0in]{geometry}
+\quotingsetup{font={raggedright, noindent}, leftmargin=0.5in, rightmargin=0in}
+
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{codegreen}{RGB}{238, 254, 206}
+\definecolor{framegreen}{RGB}{171, 203, 155}
+\lstset{backgroundcolor=\color{codegreen}}
+\lstset{frame=lines,
+    rulecolor=\color{framegreen}}
+\lstset{basicstyle=\fontfamily{pcr}\scriptsize\selectfont}
+
+\lstdefinelanguage{vasu}
+{
+basicstyle=\fontfamily{pcr}\scriptsize\selectfont
+}
+
+\lstdefinelanguage{vasuB}
+{
+basicstyle=\fontfamily{pcr}\tiny\selectfont
+}
+
+\title{In Asia for Hello World: \linebreak Communicating the Roots of Computer Science \linebreak (Week 2 Handin) }
+\author{YSC1212 Introduction to Computer Science}
+\date{January 28, 2021}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+\newpage
+\raggedright
+
+\section{Introduction}
+Most students do not know of the report released in 2013 by the inaugural Curriculum Committee of Yale-NUS College (chaired by Bryan Garsten and Rajeev Patke). In that report, the committee members noted that people are questioning the value of a liberal arts education, arguing that depth and specialisation will forever remain the direction of the university’s evolution. Yale-NUS sought to defend the liberal arts, and the report laid out the guiding principles for a curriculum that reimagines the liberal arts for our times.
+\linebreak
+
+The authors regretted that modern higher education encouraged students to “spend long hours studying in the laboratory, the field, the museum, or the library”\citep{YNC} for the sake of developing enough expertise to meet the key performance indicators of the field. Yale-NUS believed that knowledge must be put to use to create a conversation, one that allows a community of scholars to learn from each other (or even themselves) and explore where ideas can be taken. This is why the primary motivation for Yale-NUS’s curriculum design was the idea of, as the Committee phrased it, “articulate communication.”\citep{YNC}
+\linebreak
+
+To quote the report:
+\begin{quoting}
+\textit{"What would it mean to make articulate communication central to the intellectual
+culture of a college? Faculty members would pursue advances in knowledge through
+cutting-edge research just as scholars do elsewhere, but they would regard that
+research as incomplete if it is not expressed publicly to the community—not only the
+international community of peers in their disciplines, but also the immediate community of their colleagues and students in the college… Scientists investigating the properties
+of ultra-thin metals would learn to present their findings to audiences of poets as well
+as engineers, and scholars of ancient literature would learn to write for readers outside
+the academy as well as for the readers of literary reviews."}
+\linebreak
+
+\textbf{Yale-NUS College Curriculum Report} \linebreak Bryan Garsten \textit{(Chair)}, Rajeev Patke \textit{(Co-Chair)}, Charles Bailyn, Jane M. Jacobs, Kang Hway Chuan, Bryan Penprase
+\end{quoting}
+\linebreak
+\linebreak \linebreak
+This is why we recognised the gravity of the situation when monsieur Danvy urged us to reflect on the Vision and Mission of the College. In a normal CS class, such a focus on institutional values would be unthinkable. Why, common sense might go, should computer scientists learn about the pretty words that administrators use to paint a rosy picture of their college? But this is not a normal CS class, and those pretty words are more than pretty. They explain why we are taught to become a generation of computer scientists who can explain the philosophy behind the things we do - because coding and number-crunching alone are insufficient for truly understanding computing.
+\linebreak
+
+This week, we begin yet another suite of exercises with the goal of getting our brains used to thinking in new ways. Exercise 1 helps us reflect on the relationships between people, programs, and data, while also reminding us that the ideas of computing are not necessarily newfangled inventions of the digital age. Exercises 2, 6, 7, 8, and 11-14 help us build muscle memory on concepts that we learned in week 2. Mapping out proof trees and playing with partial evaluators help us achieve a stronger grasp of how these concepts work. Lastly, exercises 3 and 21 make us extend our Week 1 lessons in new directions.
+\linebreak
+
+We’re off to a good start, but we’re not resting on our laurels. (And given the challenges we faced this week, it’s probably best not to…)
+
+
+\newpage
+
+%%%%%%%%%%%%%%%% EXERCISE 1
+
+\section{Exercise 1: One Man's Quote Is Another Man's Intro to CS Problem}
+
+%\begin{quoting}
+%* \linebreak
+%In this section, we will reflect on what perhaps could be considered the Roman Empire's version of a meme – a phrase that has mutated from its origins, yet nevertheless retaining a core idea about how the same object can mean different things to two subjects. We will then see how this idea fits right at home in computer science... \linebreak
+%*
+%\end{quoting}
+
+\textit{Analyse the quip “One person’s program is another program’s data,” from its origins (“Quod ali cibus est aliis fuat acre venenum.” and “One man’s meat is another man’s poison.”) to its significance here.} \linebreak \linebreak
+\noindent \textbf{Solution:} \linebreak \linebreak
+The Latin phrase “\textit{Quod ali cibus est aliis fuat acre venenum},” literally meaning “one man’s meat is another man’s poison,” is attributed to Roman philosopher Lucretius. Victoria Dennis on the website The Phrase Finder\citep{phrasefinder} claims (though we have failed to verify this) that the first translation of this phrase into English was in 1604 by English playwright Thomas Middleton, who apparently wrote “one mans meate, is another mans poyson.” \linebreak \linebreak
+Hoping to do our own research, we did our own search of the phrase “one man’s… is another” – to little avail. Google Books recorded 30 results for the query ["one man's * is another" OR "one person's * is another"]. By 1726, it was included in a Spanish-English dictionary as an idiom,\citep{dict} and by the 1800s the format “one man’s <ANY> is another man’s <ANY>” achieved ubiquitous usage in novels, poems, and to this day even textbooks on philosophy and computer science.
+
+\begin{quoting}
+\textit{"A song by Paul Simon goes "One man's ceiling is another man's floor." Does this imply that one man's floor is another man's ceiling? Formalize the two constraints in Alloy, and check an assertion that the first implies the second."} \linebreak \linebreak
+\textbf{Software Abstractions: Logic, Language, and Analysis} \linebreak by Daniel Jackson
+\end{quoting}
+
+Usually, the phrase is used to talk about how the same object creates contrasting effects on different subjects. The original quip uses the words “meat” and “poison” to refer to the same object, implying that one person may view the object as good, desirable, and nutritious/delicious; and another person may view that same object as bad, undesirable, and potentially fatal. This is similar to the idea expressed by the American pop culture version of the phrase, “One man’s trash is another man’s treasure,” in which the same object may be worthless to one and valuable to another.
+\linebreak
+
+Let’s now proceed to analyse the culmination of this evolution: “One person’s program is another program’s data.” The first thing that stood out to us was that, in most variants of the phrase, both beholders of the phrase’s object are people, e.g. how the beholders in “one man’s loss is another man’s profit” are both men. This is one of those cases, however, where the first beholder (“one \textit{person’s}…”) and the second (another \textit{program’s}…”) are of a different nature. The second difference is that the difference highlighted by the phrase is not a contrast in quality, but rather in nature of usage. It does not comment on the program’s taste, for example. It is still nevertheless a derivation of the meat/poison phrase, because the point the phrase makes is connected to the differing relationship between the object and each of its beholders.
+\linebreak
+
+We must think about the beholder’s relationship to the object, then. A person, in using a computer, \textit{writes} a program or creates input that triggers the \textit{execution} of a program. So the program has utility to the person.
+\linebreak
+
+Meanwhile, a program processes data in certain ways. As we learned in Week 1, a program can also \textit{process other programs} as if it were data. This is especially true for compilers, which does not execute the program per se, but translates the code from a source language to a target language.
+\linebreak
+
+In short, the quip says that a program is useful, both as a program to users, but also as data to other programs.
+
+%\begin{quoting}
+%* \linebreak
+%We conclude this exercise with a  \linebreak
+%*
+%\end{quoting}
+
+%%%%%%%%%%%%%%%% EXERCISE 2
+\newpage
+
+\section{Exercise 2: S-1-1, What's Your Emergency?}
+
+\textit{Given a source program} $\,$\verb+source_program+ \textit{and its input} \verb+input+\textit{, an interpreter} \verb+interpreter+ \textit{executes} \verb+source_program+ \textit{on} \verb+input+ \textit{:}
+\begin{lstlisting}
+run interpreter (source_program, input) = output
+\end{lstlisting}
+
+\textit{Typically, we run} \verb+source_program+ \textit{on several inputs, not just one.} 
+\textit{So it is a good idea to specialize} \verb+interpreter+ \textit{with respect to a given} \verb+source_program+
+\linebreak
+
+\textit{To be concrete, say that} \verb+interpreter+ \textit{is an interpreter for Python written in OCaml, and that the S-m-n function specializes a program written in OCaml into another program written in OCaml.}
+\linebreak
+
+\textit{Questions:}
+
+\textit{a. In which language is} \verb+source_program+ \textit{written?}
+\linebreak
+\textit{b. Apply the S-1-1 function appropriately to specialize } \verb+interpreter+ \textit{with respect to} \verb+source_program,+ \textit{and characterize its result.}
+\linebreak \linebreak
+
+\noindent \textbf{Solution:} \linebreak \linebreak
+a. The first question is asking: given an interpreter for Python written in OCaml, what is the language of the programs that this interpreter can execute?
+The answer follows logically: only programs written in Python can be executed by the interpreter.
+
+Thus, \verb+source_program+ is written in Python. \linebreak
+
+b. We first instantiate the characteristic equations:
+\begin{lstlisting}
+run p (x, y) = result
+S-1-1 (p, x) = p_x
+run p_x y = result
+\end{lstlisting}
+where we have:
+\begin{itemize}
+    \item \verb+interpreter+ for \verb+p+
+    \item \verb+source_program+ for \verb+x+
+    \item \verb+input+ for \verb+y+
+    \item \verb+output+ for \verb+result+
+\end{itemize}
+
+The result reads:
+\begin{lstlisting}
+run interpreter (source_program, input) = output
+S-1-1 (interpreter, source_program) = interpreter_source_program
+run interpreter_source_program input = output
+\end{lstlisting}
+
+\verb+interpreter_source_program+, written in OCaml, is an interpreter dedicated to \verb+source_program+. Given an input \verb+input+, it returns the same result as \verb+interpreter+ on both \verb+source_program+ and \verb+input+:
+\begin{lstlisting}
+run interpreter_source_program input = run interpreter (source_program, input)
+\end{lstlisting}
+
+
+\verb+interpreter_source_program+ is also more efficient than \verb+interpreter+, because it performs fewer computations.
+%%%%%%%%%%%%%%%% EXERCISE 3
+\newpage
+
+\section{Exercise 3: Completely Partial}
+
+\textit{Write down the four causes of a partial evaluator.} \linebreak \linebreak
+
+\noindent \textbf{Solution:} \linebreak \linebreak
+
+The partial evaluator, or specialiser, is a program that takes as inputs another program and another set of inputs. It then "specialises" the given program to the given set of inputs such that it produces a version of the given program that is optimised to the given set of inputs. \linebreak \linebreak
+
+Given the above, the four causes of a partial evaluator are as such: 
+\begin{tabbing}
+Efficient cause: \= The microprocessor evaluates\\
+Material cause: \> a given program\\
+Formal cause: \> using a given set of inputs\\
+Final cause: \> to produce a version of the given program that is specialised to the given set of inputs.\\
+\end{tabbing}
+
+%%%%%%%%%%%%%%%% EXERCISE 6
+\newpage
+
+\section{Exercise 6: S-1-1, What's your Next Emergency?}
+
+\textit{As a continuation of Exercise 2, specialize the program specializer with respect to} \verb+interpreter,+ \textit{and characterize the resulting specialized program specializer: what does it do?} \linebreak
+\textit{(To be concrete, say that } \verb+PE+ \textit{ is a program written in OCaml.)} \linebreak \linebreak
+\noindent \textbf{Solution:} \linebreak \linebreak
+In order to specialize the program specializer with respect to interpreter, let us first instantiate the characteristic equations:
+\begin{lstlisting}
+run PE (p, x) = p_x
+run PE (PE, p) = PE_p
+run PE_p x = p_x
+\end{lstlisting}
+where we have:
+\begin{itemize}
+    \item \verb+interpreter+ for \verb+p+
+    \item \verb+source_program+ for \verb+x+
+\end{itemize}
+The result reads:
+\begin{lstlisting}
+run PE (interpreter, source_program) = interpreter_source_program
+run PE (PE, interpreter) = PE_interpreter
+run PE_interpreter source_program = interpreter_source_program
+\end{lstlisting}
+\verb+PE_interpreter+, written in OCaml, is a partial evaluator dedicated to specializing \verb+interpreter+. Given an input \verb+input+, it returns the same result as running interpreter on both \verb+source_program+ and \verb+input+:
+\begin{lstlisting}
+run interpreter_source_program input = run interpreter (source_program, input)
+\end{lstlisting}
+\verb+PE_interpreter+ is also more efficient than \verb+interpreter+, because it performs fewer computations.
+
+%%%%%%%%%%%%%%%% EXERCISE 7
+\newpage
+
+\section{Exercise 7: Specializing the Specializer on a Specialized Program}
+
+\textit{The goal of this exercise is to revisit the equation:}
+\begin{lstlisting}
+run PE (PE, p) = PE_p
+\end{lstlisting}
+\textit{in the particular case where} \verb+p+ \textit{is} \verb+PE+ \textit{itself, and to characterize the resulting program,} \verb+PE_PE+.\linebreak \linebreak
+\textit{d. What is the result of applying} \verb+PE_PE+ \textit{to} \verb+interpreter+, \textit{as a continuation of Exercise 2 and Exercise 6?}\linebreak
+\textit{e. What is the result of applying} \verb+PE_PE+ \textit{to} \verb+PE+\textit{?}\linebreak \linebreak
+
+\noindent \textbf{Solution:} \linebreak \linebreak
+If \verb+p+ is \verb+PE+ itself, the equation reads:
+\begin{lstlisting}
+run PE(PE, PE) = PE_PE.
+\end{lstlisting}
+d. This case reads:
+\begin{lstlisting}
+run PE_PE interpreter = result
+\end{lstlisting}
+which is an instance of the third characteristic equation:
+\begin{lstlisting}
+run PE (p, x) = p_x
+run PE (PE, p) = PE_p
+run PE_p x = p_x
+\end{lstlisting}
+with 
+\begin{itemize}
+    \item \verb+PE+ for \verb+p+ and
+    \item \verb+interpreter+ for \verb+x+
+\end{itemize}
+and where we are asked to describe what \verb+p_x+ denotes. \linebreak
+Substituting \verb+PE+ for \verb+p+ and \verb+interpreter+ for \verb+x+, the set of characteristic equations now reads:
+\begin{lstlisting}
+run PE (PE, interpreter) = PE_interpreter
+run PE (PE, PE) = PE_PE
+run PE_PE interpreter = PE_interpreter
+\end{lstlisting}
+From the third equation, we see that the result of running \verb+PE_PE+ on \verb+interpreter+ is \verb+PE_interpreter+:
+\begin{lstlisting}
+run PE_PE interpreter = PE_interpreter
+\end{lstlisting}
+As elaborated in Exercise 6, \verb+PE_interpreter+, written in OCaml, is a partial evaluator dedicated to specializing \verb+interpreter+. Given an input \verb+input+, it returns the same result as running interpreter on both \verb+source_program+ and \verb+input+. \linebreak
+So we conclude that, in this case, \verb+PE_PE+ is a partial evaluator dedicated to specializing \verb+PE+ that, given an input \verb+interpreter+, returns the same result as running \verb+PE+ on both \verb+PE+ and \verb+interpreter+:
+\begin{lstlisting}
+run PE_PE interpreter = run PE (PE, interpreter)
+\end{lstlisting}
+\verb+PE_PE+ is also more efficient than \verb+PE+ because if performs fewer computations.\linebreak \linebreak
+e. This case reads:
+\begin{lstlisting}
+run PE_PE PE = result
+\end{lstlisting}
+which is an instance of the third characteristic equation:
+\begin{lstlisting}
+run PE (p, x) = p_x
+run PE (PE, p) = PE_p
+run PE_p x = p_x
+\end{lstlisting}
+with
+\begin{itemize}
+    \item \verb+PE+ for \verb+p+ and
+    \item \verb+PE+ for \verb+x+
+\end{itemize}
+and we are asked to describe what \verb+p_x+ denotes. \linebreak
+Substituting \verb+PE+ for \verb+p+ and \verb+PE+ for \verb+x+, the set of characteristic equations now reads:
+\begin{lstlisting}
+run PE (PE, PE) = PE_PE
+run PE (PE, PE) = PE_PE
+run PE_PE PE = PE_PE
+\end{lstlisting}
+From the third equation, we see that the result of running \verb+PE_PE+ on \verb+PE+ is \verb+PE_PE+:
+\begin{lstlisting}
+run PE_PE PE = PE_PE
+\end{lstlisting}
+The final result \verb+PE_PE+ is a partial evaluator dedicated to specializing \verb+PE+ that, given an input \verb+interpreter+, returns the same result as running \verb+PE+ on both \verb+PE+ and \verb+interpreter+.\linebreak
+So, we conclude that, in this case, \verb+PE_PE+ is a partial evaluator dedicated to specializing \verb+PE+, that, given an input \verb+PE+, returns the same result as running \verb+PE+ on both \verb+PE+ and \verb+PE+:
+\begin{lstlisting}
+run PE_PE PE = run PE (PE, PE)
+\end{lstlisting}
+\verb+PE_PE+ is also more efficient than PE because it performs fewer computations.
+
+%%%%%%%%%%%%%%%% Exercise 8
+\newpage
+\section{Exercise 8: Sentences in CS?!!}
+We begin this question by being introduced to the grammar of a certain sentence and the task is to see whether the sentences (a-l) can be constructed well given the conditions set up by the grammar which is shown below. \linebreak
+\begin{lstlisting}
+<sentence>     ::= <subject> <verb>.
+                 | <subject> <verb> <complement>.
+
+<subject>      ::= I
+                 | You
+
+<verb>         ::= see
+                 | do not see
+
+<complement>   ::= me
+                 | myself
+                 | you
+                 | yourself
+                 | the mirror
+                 | that <sub-sentence>
+
+<sub-sentence> ::= <sub-subject> <verb>
+                 | <sub-subject> <verb> <complement>
+
+<sub-subject>  ::= I
+                 | you
+\end{lstlisting} 
+\linebreak
+
+\textbf{Does this grammar account for a finite number of sentences or for an infinite one? Why?}
+\linebreak
+ 
+This grammar accounts for an infinite number of sequences because the complement <non-terminal> can produce a <sub-sentence> non-terminal and at the same time the <sub-sentence> non-terminal can also generate another <complement> non-terminal. Essentially it can create a loop that will allow for the sentence to go on infinitely, or as Buzz Light-year would put it to infinity and beyond.\linebreak
+
+\textbf{Are the following sentences well formed with respect to this grammar? Justify your answer either with a derivation or with an abstract-syntax tree if the answer is positive, or with the beginning of a derivation if the answer is negative.}
+\linebreak
+
+\begin{alphabetize} 
+\item a) I myself. (NO) 
+\begin{lstlisting}
+<sentence> 
+-->  
+<subject> <verb>. 
+--> 
+I <verb>. 
+\end{lstlisting} \linebreak
+As shown in this particular derivation, the sentence “I myself” is not possible to be generated as the <verb> non-terminal cannot give rise to (::=) to the terminal “myself” as the <verb> non-terminal contains “see” and “do not see” \linebreak
+
+\begin{lstlisting}
+<sentence> 
+-->  
+<subject> <verb> <complement>.
+--> 
+I <verb> <complement>. 
+\end{lstlisting} \linebreak
+In this second possible scenario, we could see that the there is a possibility to produce the terminal “myself” as the non-terminal <complement> exists. However, the <sentence> non-terminal gives rise to the non-terminal <subject> <verb> <complement> in this order. This means that what the terminal <subject> gives rise to must be followed by what the terminal <verb> gives rise to before the terminal <complement> gives rise to. Furthermore, in this particular construction the sentence does not have a verb, which makes it impossible to be well constructed according to the rules set by <sentence>. \linebreak
+\item b)I see myself. (YES)
+\begin{lstlisting}
+<sentence>__________
+        /   |    \          \
+<subject> <verb> <complement>.
+    |       |         |
+    I      see      myself.
+\end{lstlisting} \linebreak
+For this case we could see that it is possible to generate the sentence “I see myself” according to the rules placed by the sentence. As shown in the abstract-syntax tree above, the sentence “I see myself” follows the framework given by the sentence, which is in the order of <subject> <verb> <complement>. The non-terminal <subject> can produce the terminal “I”, the non-terminal <verb> the terminal “see”, and non-terminal <complement> the terminal “myself”. Furthermore, the sentence follows the structure given by the grammar of the <sentence>, which can give rise to <subject> <verb> <complement> construction. As such, this sentence is well-formed with respect to this grammar because it has all the terminals necessary to construct it and it follows the construction that the grammar dictates.\linebreak
+
+\item c)I see the mirror. (YES) 
+\begin{lstlisting}
+<sentence>__________
+        /   |    \          \
+<subject> <verb> <complement>.
+    |       |         |
+    I      see      the mirror.
+\end{lstlisting} \linebreak
+The sentence is very similar in construction to (8.2b) whereby the sentence is constructed in the format that follows the <subject> <verb> <complement> and all the non-terminals can give rise to the terminals “I”, “see”, “the mirror.”\linebreak
+
+\item d)The mirror sees me. (NO) 
+\begin{lstlisting}
+<sentence> 
+-->  
+<subject> <verb> <complement>.
+\end{lstlisting} \linebreak
+As shown in this derivation, the sentence “the mirror sees me” is not able to be constructed well under the rules of this grammar. While the non-terminal <verb> and <complement> can give rise to “see” and “me” respectively, the non-terminal <subject> cannot give rise to the terminal “the mirror”. Although the terminal mirror exists, it can only come from the non-terminal <complement>.\linebreak
+
+\item e)	You do not see yourself in the mirror. (NO) 
+\begin{lstlisting}
+<sentence> 
+-->  
+<subject> <verb> <complement>.
+--> 
+You <verb> <complement>.
+--> 
+You do not see <complement>.
+\end{lstlisting} \linebreak
+As shown from the derivation tree, the sentence can be constructed up to the point it reaches non-terminal <complement>. After this stage, it is impossible to follow through and make a terminal “yourself in the mirror” because of two things. Firstly, the terminal “yourself <sub-sentence>” does not exists, which means that by picking “yourself” the sentence is forced to end there. Secondly, even if there was this option, it would still be impossible as <sub-sentence> must always be in the form of <sub-subject> <verb> or <sub-subject> <verb> <complement>. The options to put in a preposition is not given in the sentence which makes this sentence impossible to construct in the grammar stipulated.\linebreak
+
+\item f)	I see that I see the mirror. (YES) 
+\begin{lstlisting}
+<sentence>__________
+        /   |    \          \
+<subject> <verb> <complement>.
+    |       |         |
+    I      see      that <sub-sentence>
+                      /     |      \
+              <sub-subject> <verb> <complement>
+                  |           |         |
+                  I          see    the mirror.
+\end{lstlisting} \linebreak
+From the abstract-syntax tree above, we could see that the sentence proposed could be constructed. It follows the logic/grammar provided by <sentence> and it has all the terminals that can construct this sentence. One interesting thing about this sentence is that it makes use of the <sub-sentence> non-terminal which was not seen with other sentences up to this point. \linebreak
+\item g)	I see that you do not see yourself in the mirror. (NO) 
+\begin{lstlisting}
+<sentence> 
+-->  
+<subject> <verb> <complement>.
+--> 
+I <verb> <complement>.
+--> 
+I see <complement>
+--> 
+I see that <sub-sentence> 
+-->
+I see that <sub-subject> <verb> <complement>
+-->
+I see that you <verb> <complement>
+-->
+I see that you do not see <complement>
+-->
+I see that you do not see yourself.
+\end{lstlisting} \linebreak
+
+As seen from this derivation tree, the sentence can be constructed up to “do not see” which is part of the <sub-sentence> non-terminal. However, it faces a similar problem with (8e), whereby the lack of yourself <sub-sentence> to continue does not exist and the non-existence of “in” as a terminal. \linebreak
+
+\item h)	You see that I see that you do not see yourself. (YES) 
+\begin{lstlisting}
+<sentence>__________
+        /   |    \          \
+<subject> <verb> <complement>.
+    |       |         |
+   You      see      that <sub-sentence>
+                      /     |      \
+              <sub-subject> <verb> <complement>
+                  |           |         |
+                  I          see     that <sub-sentence>
+                                       /     |      \
+                             <sub-subject> <verb> <complement>
+                                  |           |         |
+                                 You      do not see    yourself.
+\end{lstlisting} \linebreak
+This particular sentence is similar to (8f) whereby it capitalizes on the terminal “that <sub-sentence>. This allows it to construct more iterations of <sub-subjects>, <verb>, and <complement> necessary to construct the sentence. One interesting difference is that it uses the <sub-sentence>” twice as compared to (f) which only used it once. \linebreak
+
+\item i) I see. (YES) 
+\begin{lstlisting}
+<sentence>__________
+        /   |  
+<subject> <verb>. 
+    |       |         
+    I      see.   
+\end{lstlisting} \linebreak
+From this abstract-syntax tree, this sentence is able to be constructed because it takes on an alternative construction of <sentence>, which is <subject> <verb>. The <subject> gives rise to “I”, while <verb> gives rise to “see”. \linebreak
+
+\item j)	You see? (NO) 
+\begin{lstlisting}
+<sentence> 
+-->  
+<subject> <verb>.
+--> 
+You <verb>
+--> 
+You see.
+\end{lstlisting} \linebreak
+Unfortunately, unlike the previous sentence, the construction of this sentence is impossible as it does not have the terminal “?”. \linebreak \linebreak
+
+\item k)	You see that I see that you see that I see the mirror. (YES) \linebreak
+\begin{lstlisting}
+<sentence>__________
+        /   |    \          \
+<subject> <verb> <complement>.
+    |       |         |
+   You      see    that <sub-sentence>
+                 /     |      \
+       <sub-subject> <verb> <complement>
+            |           |         |
+            I          see     that <sub-sentence>
+                              /     |      \
+                    <sub-subject> <verb> <complement>
+                        |           |         |
+                       You         see   that <sub-sentence>
+                                         /     |      \
+                                <sub-subject> <verb> <complement>
+                                   |           |         |
+                                   I          see     the mirror.
+\end{lstlisting} \linebreak
+This sentence uses the longest iteration that has been seen from the questions asked. In total, the question uses the <sub-sentence> a total of 3 times. However, again this is possible as the language structure accommodates for an infinite number of <sub-sentence>. \linebreak
+\item l)	Mirrors, reflection, and self-reference. (NO) 
+\begin{lstlisting}
+<sentence> 
+-->  
+<subject> <verb>.
+\end{lstlisting} \linebreak
+In this case we could see that the sentence itself does not contain any terminals which would allow for its construction and it also does not seem to follow the logical structure dictated by the grammar of <sentence>. \linebreak \linebreak
+As the question has stated by itself it is here as a means of reflection and a time to pause and think about the importance of this exercise. I feel like the last few questions is sort of a way of injecting humour into this exercise and that this question might refer to that. Alternatively, although again I am not completely sure about the extent of the exercise’s goals, it reminds me of the materials covered in the previous weeks with regards to self-references and what it means. In the grander scheme of things might this be connected to the concept of recursion.  
+\end{alphabetize}
+
+
+%%%%%%%%%%%%%%%% EXERCISE 11
+
+\newpage
+
+\section{Exercise 11: Atomic Trees}
+
+\textit{If possible,}
+\begin{quoting}
+\textit{1. derive, and} \linebreak
+\textit{2. draw abstract-syntax trees (ASTs)}
+\end{quoting}
+\textit{for each the following regular expressions:} \linebreak \linebreak
+
+\noindent \textbf{Solution:} 
+
+\begin{quoting}
+\textit{a. empty}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(empty)
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+<regexp>
+   |
+(empty)
+
+
+\end{lstlisting}
+
+\begin{quoting}
+\textit{b. any}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(any)
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+<regexp>
+   |
+ (any)
+ 
+ 
+\end{lstlisting}
+
+\begin{quoting}
+\textit{c. (seq empty empty)}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(seq <regexp> <regexp>) -->
+(seq (empty) (empty))
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+<regexp>
+   |
+ (seq <regexp> <regexp>)
+         |        |
+      (empty)  (empty)
+      
+      
+\end{lstlisting}
+\newpage
+\begin{quoting}
+\textit{d. (seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom 4) (empty)))))}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(seq <regexp> <regexp>) -->
+(seq (atom <atom>) <regexp>) -->
+(seq (atom 1) <regexp>) -->
+(seq (atom 1) (seq <regexp> <regexp>)) -->
+(seq (atom 1) (seq (atom <atom>) <regexp>)) -->
+(seq (atom 1) (seq (atom 2) <regexp>)) -->
+(seq (atom 1) (seq (atom 2) (seq <regexp> <regexp>))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom <atom>) <regexp>))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) <regexp>))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) (seq <regexp> <regexp>)))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom <atom>) <regexp>)))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom 4) <regexp>)))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom 4) (empty)))))
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+    <regexp>
+       |
+       |
+    (seq <regexp> <regexp>)
+            /        |
+           /         |
+  (atom <atom>)   (seq <regexp> <regexp>)
+          |               /        |
+          1              /         |
+                 (atom <atom>)  (seq <regexp> <regexp>)
+                         |              /        |
+                         2             /         |
+                               (atom <atom>)  (seq <regexp> <regexp>)
+                                       |              /        |
+                                       3             /         |
+                                             (atom <atom>)  (empty)
+                                                     |              
+                                                     4                   
+      
+      
+\end{lstlisting}
+
+\begin{quoting}
+\textit{e. (seq (atom 1) (seq (atom 2) (seq (atom 3) (atom 4))))}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(seq <regexp> <regexp>) -->
+(seq (atom <atom>) <regexp>) -->
+(seq (atom 1) <regexp>) -->
+(seq (atom 1) (seq <regexp> <regexp>)) -->
+(seq (atom 1) (seq (atom <atom>) <regexp>)) -->
+(seq (atom 1) (seq (atom 2) <regexp>)) -->
+(seq (atom 1) (seq (atom 2) (seq <regexp> <regexp>))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom <atom>) <regexp>))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) <regexp>))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) (atom <atom>)))) -->
+(seq (atom 1) (seq (atom 2) (seq (atom 3) (atom 4))))
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+    <regexp>
+       |
+       |
+    (seq <regexp> <regexp>)
+            /        |
+           /         |
+  (atom <atom>)   (seq <regexp> <regexp>)
+          |               /        |
+          1              /         |
+                 (atom <atom>)  (seq <regexp> <regexp>)
+                         |              /        |
+                         2             /         |
+                               (atom <atom>)   (atom <atom>)
+                                       |               |
+                                       3               4           
+      
+      
+\end{lstlisting}
+\newpage
+
+\begin{quoting}
+\textit{f. (seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq (atom 3) (atom 4))))}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(seq <regexp> <regexp>) -->
+(seq (seq <regexp> <regexp>) <regexp>) -->
+(seq (seq (empty) <regexp>) <regexp>) -->
+(seq (seq (empty) (seq <regexp> <regexp>)) <regexp>) -->
+(seq (seq (empty) (seq (atom <atom>) <regexp>)) <regexp>) -->
+(seq (seq (empty) (seq (atom 1) <regexp>)) <regexp>) -->
+(seq (seq (empty) (seq (atom 1) (atom <atom>))) <regexp>) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) <regexp>) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) (seq <regexp> <regexp>)) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) <regexp>)) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq <regexp> <regexp>))) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq (atom <atom>) <regexp>))) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq (atom 3) <regexp>))) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq (atom 3) (atom <atom>)))) -->
+(seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq (atom 3) (atom 4))))
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+                <regexp>
+                   |
+                   |
+                (seq <regexp> <regexp>)
+                        /        \
+                       /          \
+                      /            \
+(seq <regexp> <regexp>)            (seq <regexp> <regexp>)
+         /        |                        /         \
+        /         |                       /           \
+  (empty)    (seq <regexp> <regexp>)   (empty)     (seq <regexp> <regexp>)
+                     /        \                            /        \
+                    /          \                          /          \
+            (atom <atom>)     (atom <atom>)       (atom <atom>)     (atom <atom>)
+                    |                 |                   |                 |
+                    1                 2                   3                 4
+      
+      
+\end{lstlisting}
+
+\begin{quoting}
+\textit{g. (seq (seq (seq (atom 1) (atom 2)) (atom 3)) (atom 4))}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(seq <regexp> <regexp>) -->
+(seq (seq <regexp> <regexp>) <regexp>) -->
+(seq (seq (seq <regexp> <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (atom <atom>) <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (atom 1) <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (atom 1) (atom <atom>)) <regexp>) <regexp>) -->
+(seq (seq (seq (atom 1) (atom 2)) <regexp>) <regexp>) -->
+(seq (seq (seq (atom 1) (atom 2)) (atom <atom)) <regexp>) -->
+(seq (seq (seq (atom 1) (atom 2)) (atom 3)) <regexp>) -->
+(seq (seq (seq (atom 1) (atom 2)) (atom 3)) (atom <atom>)) -->
+(seq (seq (seq (atom 1) (atom 2)) (atom 3)) (atom 4))
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+                            <regexp>
+                                |
+                                |
+                             (seq <regexp> <regexp>)
+                                     /        \
+                                    /          \
+                (seq <regexp> <regexp>)      (atom <atom>)
+                        /        \                   |
+                       /          \                  4
+   (seq <regexp> <regexp>)      (atom <atom>)
+           /        \                   |
+          /          \                  3
+ (atom <atom>)     (atom <atom>)
+         |                 |
+         1                 2
+      
+      
+\end{lstlisting}
+\newpage
+
+\begin{quoting}
+\textit{h. (seq (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom 3)) (atom 4))}
+\end{quoting}
+
+\underline{Derivation}
+\begin{lstlisting}[language=vasu]
+<regexp> --> 
+(seq <regexp> <regexp>) -->
+(seq (seq <regexp> <regexp>) <regexp>) -->
+(seq (seq (seq <regexp> <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (seq <regexp> <regexp>) <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (seq (empty) <regexp>) <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (seq (empty) (atom <atom>)) <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (seq (empty) (atom 1)) <regexp>) <regexp>) <regexp>) -->
+(seq (seq (seq (seq (empty) (atom 1)) (atom <atom>)) <regexp>) <regexp>) -->
+(seq (seq (seq (seq (empty) (atom 1)) (atom 2)) <regexp>) <regexp>) -->
+(seq (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom <atom>)) <regexp>) -->
+(seq (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom 3)) <regexp> -->
+(seq (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom 3)) (atom <atom>)) -->
+(seq (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom 3)) (atom 4))
+
+\end{lstlisting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+                                        <regexp>
+                                            |
+                                            |
+                                         (seq <regexp> <regexp>)
+                                                 /        \
+                                                /          \
+                            (seq <regexp> <regexp>)      (atom <atom>)
+                                    /        \                   |
+                                   /          \                  4
+               (seq <regexp> <regexp>)      (atom <atom>)
+                       /        \                   |
+                      /          \                  3
+  (seq <regexp> <regexp>)      (atom <atom>)
+          /        \                   |
+         /          \                  2
+    (empty)     (atom <atom>)
+                        |
+                        1
+      
+      
+\end{lstlisting}
+
+This exercise required a lot of careful diligence in making sure that all the branches of the ASTs were represented as per the derivation and the question itself, and a whole lot of patience as well. Although largely repetitive, the process of making these trees was helpful to cement our understanding of how to spot their root structures just by looking at the end product.
+
+%%%%%%%%%%%%%%%% Exercise 12
+\newpage
+\section{Exercise 12: Brackets Brackets Brackets}
+
+The given BNF for this particular question is taken from the lecture notes and it is noted down below before the start of the question as a reference to check whether the abstract syntax tree can form a regular expression. 
+
+\begin{lstlisting}
+<regexp> ::= (empty)
+           | (atom <atom>)
+           | (any)
+           | (seq <regexp> <regexp>)
+           | (disj <regexp> <regexp>)
+           | (star <regexp>)           | (plus <regexp>)
+
+<atom>   ::= ...any integer...
+\end{lstlisting}
+
+\begin{lstlisting}
+a.
+   <regexp>
+     |
+   (seq <regexp> <regexp>)
+          /        \
+    (atom <atom>) (seq <regexp> <regexp>)
+           |             /        \
+           1       (atom <atom>) (seq <regexp> <regexp>)
+                          |             /        \
+                          2     (atom <atom>) (seq <regexp> <regexp>)
+                                       |             /        \
+                                       3       (atom <atom>)  (empty)
+                                                      |
+                                                      4
+\end{lstlisting} \linebreak
+Answer: (seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom 4) (empty)))))
+
+\begin{lstlisting}
+b.
+   <regexp>
+     |
+   (seq <regexp> <regexp>)
+          /        \
+    (atom <atom>) (seq <regexp> <regexp>)
+           |             /        \
+           1      (atom <atom>) (seq <regexp> <regexp>)
+                         |             /        \
+                         2       (atom <atom>) (atom <atom>)
+                                        |           |
+                                        3           4
+\end{lstlisting}
+Answer: (seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom 4))))
+
+\begin{lstlisting}
+c.
+                 <regexp>
+                   |
+                 (seq <regexp> <regexp>)
+                        /           \
+                       /             \
+   (seq <regexp> <regexp>)          (seq <regexp> <regexp>)
+          /        \                         |         \
+      (empty)    (seq <regexp> <regexp>)    empty    (seq <regexp> <regexp>)
+                       /         \                          /        \
+             (atom <atom>)     (atom <atom>)      (atom <atom>)    (atom <atom>)
+                    |                 |                  |                |
+                    1                 2                  3                4
+\end{lstlisting}
+Answer: Given the BNF, for this particular question it will not be able to derive this abstract syntax tree because the terminal empty (without the brackets) does not exist. Hence there is no definite regular expression that could be derived from this tree. \linebreak
+
+\begin{lstlisting}
+ d.
+                           <regexp>
+                             |
+                           (seq <regexp> <regexp>)
+                                  /        \
+               (seq <regexp> <regexp>)    (atom <atom>)
+                     /         \                 |
+   (seq <regexp> <regexp>)    (atom <atom>)      4
+          /        \                 |
+   (atom <atom>)  (atom <atom>)      3
+          |              |
+          1              2
+\end{lstlisting}
+Answer: (seq (seq (seq (atom 1) (atom 2)) (atom 3)) (atom 4))	
+
+\begin{lstlisting}
+ e.                                        <regexp>
+                                          |
+                                        (seq <regexp> <regexp>)
+                                               /           \
+                           (seq <regexp> <regexp>)       (atom <atom>)
+                                  /           \                 |
+               (seq <regexp> <regexp>)      (atom <atom>)       4
+                      /           \                |
+   (seq <regexp> <regexp>)   (atom <atom>)         3
+          /        \                |
+        any   (atom <atom>)         2
+                     |
+                     1
+\end{lstlisting}
+Answer: Given the BNF, this particular tree faces a similar issue to (12c.) whereby there is a terminal within the tree that cannot be generated. To be precise it is the terminal “any” (yes again with no brackets)  
+
+\begin{lstlisting}
+ f.
+                  <regexp>
+                    |
+                  (seq <regexp> <regexp>)
+                         /           \
+     (seq <regexp> <regexp>)       (seq <regexp> <regexp>)
+            /        \                    /        \
+   (atom <atom>)  (atom <atom>)  (atom <atom>)  (atom <atom>)
+          |              |              |              |
+          1              2              3              4
+\end{lstlisting}
+Answer: (seq (seq (atom 1) (atom 2)) (seq (atom 3) (atom 4))) 
+\linebreak \linebreak
+From this exercise, we learn to think systematically and at the same time to be meticulous in our works (hopefully I gave the right number of brackets and they are correctly placed). In addition it familiarizes us further with the abstract-syntax tree and the way we can break down problem.
+
+\newpage
+%%%%%%%%%%%%%%%% EXERCISE 13
+\newpage
+\section{Exercise 13: Two Trees Walk Into A Mirror}
+
+\textit{Draw proof trees for the same regular expressions as in Exercise 11 and verify that they have the same shape as the abstract-syntax trees you drew in your solution of Exercise 11.} \linebreak 
+
+\noindent \textbf{Solution:}
+
+\begin{quoting}
+\textit{a. empty}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+<regexp>
+   |
+(empty)
+
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasu]
+
+EMPTY --------------
+      RE (empty)
+
+
+\end{lstlisting}
+
+\begin{quoting}
+\textit{b. any}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+<regexp>
+   |
+ (any)
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasu]
+    
+ANY ------------
+    RE (any)
+
+ 
+\end{lstlisting}
+
+\begin{quoting}
+\textit{c. (seq empty empty)}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+<regexp>
+   |
+ (seq <regexp> <regexp>)
+         |        |
+      (empty)  (empty)
+
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasu]
+
+EMPTY ----------   EMPTY ----------   
+      RE (empty)         RE (empty)
+  SEQ -----------------------------
+      RE (seq empty empty)
+      
+      
+\end{lstlisting}
+\newpage
+
+\begin{quoting}
+\textit{d. (seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom 4) (empty)))))}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+    <regexp>
+       |
+       |
+    (seq <regexp> <regexp>)
+            /        |
+           /         |
+  (atom <atom>)   (seq <regexp> <regexp>)
+          |               /        |
+          1              /         |
+                 (atom <atom>)  (seq <regexp> <regexp>)
+                         |              /        |
+                         2             /         |
+                               (atom <atom>)  (seq <regexp> <regexp>)
+                                       |              /        |
+                                       3             /         |
+                                             (atom <atom>)  (empty)
+                                                     |              
+                                                     4                   
+
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasu]
+                                                                       4 is an integer
+                                                                  ATOM ---------------   EMPTY ----------
+                                                 3 is an integer       RE (atom 4)             RE (empty)
+                                            ATOM ---------------   SEQ ----------------------------------
+                           2 is an integer       RE (atom 3)           RE (seq (atom 4) (empty))
+                      ATOM ---------------   SEQ -----------------------------------------------
+     1 is an integer       RE (atom 2)           RE (seq (atom 3) (seq (atom 4) (empty)))
+ATOM ---------------   SEQ --------------------------------------------------------------     
+     RE (atom 1)           RE (seq (atom 2) (seq (atom 3) (seq (atom 4) (empty))))
+ SEQ ----------------------------------------------------------------------------        
+     RE (seq (atom 1) (seq (atom 2) (seq (atom 3) (seq (atom 4) (empty)))))    
+      
+      
+\end{lstlisting}
+
+\begin{quoting}
+\textit{e. (seq (atom 1) (seq (atom 2) (seq (atom 3) (atom 4))))}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+    <regexp>
+       |
+       |
+    (seq <regexp> <regexp>)
+            /        |
+           /         |
+  (atom <atom>)   (seq <regexp> <regexp>)
+          |               /        |
+          1              /         |
+                 (atom <atom>)  (seq <regexp> <regexp>)
+                         |              /        |
+                         2             /         |
+                               (atom <atom>)   (atom <atom>)
+                                       |               |
+                                       3               4     
+
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasu]
+                                                 3 is an integer        4 is an integer
+                                            ATOM ---------------   ATOM ---------------
+                           2 is an integer       RE (atom 3)            RE (atom 4)
+                      ATOM ---------------   SEQ ----------------------------------
+     1 is an integer       RE (atom 2)           RE (seq (atom 3) (atom 4))
+ATOM ---------------   SEQ ------------------------------------------------    
+     RE (atom 1)           RE (seq (atom 2) (seq (atom 3) (atom 4)))
+ SEQ ---------------------------------------------------------------       
+     RE (seq (atom 1) (seq (atom 2) (seq (atom 3) (atom 4))))    
+      
+      
+\end{lstlisting}
+\newpage
+
+\begin{quoting}
+\textit{f. (seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq (atom 3) (atom 4))))}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+                    <regexp>
+                       |
+                       |
+                    (seq <regexp> <regexp>)
+                            /        \
+                           /          \
+                          /            \
+    (seq <regexp> <regexp>)            (seq <regexp> <regexp>)
+             /        |                        /         \
+            /         |                       /           \
+      (empty)    (seq <regexp> <regexp>)   (empty)     (seq <regexp> <regexp>)
+                         /        \                            /        \
+                        /          \                          /          \
+                (atom <atom>)     (atom <atom>)       (atom <atom>)     (atom <atom>)
+                        |                 |                   |                 |
+                        1                 2                   3                 4
+
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasuB]
+                       1 is an integer        2 is an integer                      3 is an integer        4 int
+                  ATOM ---------------   ATOM ---------------                 ATOM ---------------   ATOM -----
+                       RE (atom 1)            RE (atom 2)                          RE (atom 3)            RE (4)
+EMPTY ----------   SEQ ----------------------------------   EMPTY ----------   SEQ ------------------------------
+      RE (empty)       RE (seq (atom 1) (atom 2))                 RE (empty)       RE (seq (atom 3) (atom 4)   
+  SEQ --------------------------------------------            SEQ ------------------------------------------  
+      RE (seq (empty) (seq (atom 1) (atom 2)))                    RE (seq (empty) (seq (atom 3) (atom 4)))
+  SEQ ----------------------------------------------------------------------------------------------------       
+      RE (seq (seq (empty) (seq (atom 1) (atom 2))) (seq (empty) (seq (atom 3) (atom 4))))
+\end{lstlisting}
+
+
+\begin{quoting}
+\textit{g. (seq (seq (seq (atom 1) (atom 2)) (atom 3)) (atom 4))}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+                            <regexp>
+                                |
+                                |
+                             (seq <regexp> <regexp>)
+                                     /        \
+                                    /          \
+                (seq <regexp> <regexp>)      (atom <atom>)
+                        /        \                   |
+                       /          \                  4
+   (seq <regexp> <regexp>)      (atom <atom>)
+           /        \                   |
+          /          \                  3
+ (atom <atom>)     (atom <atom>)
+         |                 |
+         1                 2
+
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasu]
+     1 is an integer        2 is an integer                   
+ATOM ---------------   ATOM ---------------                              
+     RE (atom 1)            RE (atom 2)        3 is an integer                    
+ SEQ ----------------------------------   ATOM ---------------                            
+     RE (seq (atom 1) (atom 2))                RE (atom 3)        4 is an integer                    
+ SEQ -----------------------------------------------------   ATOM ---------------                              
+     RE (seq (seq (atom 1) (atom 2)) (atom 3))                    RE (atom 4)                            
+ SEQ ------------------------------------------------------------------------                                
+     RE (seq (seq (seq (atom 1) (atom 2)) (atom 3)) (atom 4))                            
+     
+      
+\end{lstlisting}
+\newpage
+
+\begin{quoting}
+\textit{h. (seq (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom 3)) (atom 4))}
+\end{quoting}
+
+\underline{AST}
+\begin{lstlisting}[language=vasu]
+                                        <regexp>
+                                            |
+                                            |
+                                         (seq <regexp> <regexp>)
+                                                 /        \
+                                                /          \
+                            (seq <regexp> <regexp>)      (atom <atom>)
+                                    /        \                   |
+                                   /          \                  4
+               (seq <regexp> <regexp>)      (atom <atom>)
+                       /        \                   |
+                      /          \                  3
+  (seq <regexp> <regexp>)      (atom <atom>)
+          /        \                   |
+         /          \                  2
+    (empty)     (atom <atom>)
+                        |
+                        1
+
+\end{lstlisting}
+
+\underline{Proof Tree}
+\begin{lstlisting}[language=vasu]
+                        1 is an integer                        
+EMPTY ----------   ATOM ---------------                                                
+      RE (empty)        RE (atom 1)        2 is an integer                                 
+  SEQ -----------------------------   ATOM ---------------                                               
+      RE (seq (empty) (atom 1))           RE (atom 2)        3 is an integer                                  
+  SEQ -----------------------------------------------   ATOM ---------------                                     
+      RE (seq (seq (empty) (atom 1)) (atom 2))               RE (atom 3)        4 is an integer                   
+  SEQ ------------------------------------------------------------------   ATOM ---------------
+      RE (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom 3))                   RE (atom 4)                     
+  SEQ -------------------------------------------------------------------------------------                   
+      RE (seq (seq (seq (seq (empty) (atom 1)) (atom 2)) (atom 3)) (atom 4))                      
+\end{lstlisting}
+
+
+These proof trees were essentially mirrors of the ASTs, which made the verification of their similarity much easier.
+
+%%%%%%%%%%%%%%%% EXERCISE 21
+\newpage
+
+\section{Exercise 14: Getting to the Root of Things}
+
+\textit{Find the roots of the following proof trees.}\linebreak \linebreak
+
+a.
+\begin{lstlisting}[language=vasu]
+     42 is an integer
+ATOM ----------------    EMPTY ---
+     ...                       ...
+ SEQ -----------------------------
+     ...
+\end{lstlisting}
+
+\noindent \textbf{Solution:}
+\begin{lstlisting}[language=vasu]
+     42 is an integer
+ATOM ----------------    EMPTY ----------
+     RE (atom 42)              RE (empty)
+ SEQ ------------------------------------
+     RE (seq (atom 42) (empty))
+\end{lstlisting}
+
+
+b.
+\begin{lstlisting}[language=vasu]
+           ANY ---    ANY ---
+               ...        ...
+ANY ---    SEQ --------------
+    ...        ...
+SEQ -------------------------
+    ...
+\end{lstlisting}
+
+
+\noindent \textbf{Solution:}
+\begin{lstlisting}[language=vasu]
+                ANY --------   ANY --------
+                    RE (any)       RE (any)
+ANY --------    SEQ -----------------------
+    RE (any)         RE (seq (any) (any))
+SEQ ---------------------------------------
+    RE (seq (any) (seq (any) (any)) )
+\end{lstlisting}
+
+
+c.
+\begin{lstlisting}[language=vasu]
+EMPTY ---
+      ...
+  ANY ---
+      ...
+  ANY ---
+      ...
+\end{lstlisting}
+
+
+\noindent \textbf{Solution:} \linebreak \linebreak
+This is an invalid proof tree. This is because the rule ANY is an axiom and is unconditional. Therefore, a properly constructed proof tree would not go beyond the very first ANY at the bottom. \linebreak \linebreak
+
+However, if we ignore this issue, we would simply get the following proof tree:
+\begin{lstlisting}[language=vasu]
+  ANY ---
+      RE (any)
+\end{lstlisting}
+\newpage
+
+
+\section{Exercise 16: Com-pi-la-tion}
+
+\textit{Write down as many as you like of the four causes of compilation in Computer Science.}\linebreak \linebreak
+
+\noindent \textbf{Solution:} \linebreak \linebreak
+
+The four causes of compilation in Computer Science are as such: 
+\begin{tabbing}
+Efficient cause: \= The microprocessor compiles\\
+Material cause: \> the source program (i.e, a program written in the source language)\\
+Formal cause: \> using the compiler\\
+Final cause: \> to produce a target program (i.e. a program written in the target language).\\
+\end{tabbing}
+
+In more detail:
+
+\begin{tabbing}
+Efficient cause: \= The microprocessor compiles\\
+\textit{(i.e. The microprocessor translates from one language to another)}\\
+Material cause: \> the source program\\
+\textit{(i.e, a program written in the source language)}\\
+Formal cause: \> using the compiler\\
+\textit{(i.e. using a program—that is, a series of instructions for the microprocessor—designed for such translation)}\\
+Final cause: \> to produce a target program.\\
+\textit{(i.e. to produce a program written in the target language)}\\
+\end{tabbing}
+
+\linebreak \linebreak
+
+Note that this differs from the four causes of a compiler because here a compiler is itself one of the four causes of compilation.
+
+\newpage
+
+\section{Exercise 21: Algorithmic Alchemy}
+
+\textit{You are given an x86 microprocessor and the following two compilers:}
+\linebreak
+
+\includegraphics[scale=0.5]{Q1.png}
+
+\textit{How would you obtain the following compiler?}
+\linebreak
+
+\includegraphics[scale=0.5]{Q2.png}
+
+\noindent \textbf{Solution:} \linebreak \linebreak
+We will first make the assumption that the exercise entails only having these three components. Both of the compilers translate code written in L to x86.
+\linebreak
+
+\includegraphics[scale=0.6]{1n2.png}
+\linebreak
+
+Of the two, the only compiler that runs on the x86 microprocessor is the I/I one, which I will label as \textbf{Compiler 1}. In the first step of this solution, we will translate the E/E compiler, or \textbf{Compiler 2}, into x86 using Compiler 1. We will assume that this translation is \textit{correct}.
+\linebreak
+
+\includegraphics[scale=0.6]{3.png}
+\linebreak
+
+The resulting compiler,\textbf{Compiler 3}, will generate efficient code like Compiler 2. The compiler itself, however, will not be efficient because it was created using an inefficient compiler that creates inefficient code. Compiler 3 therefore is I/E.
+\linebreak
+
+We will not process Compiler 3 through another compiler, as none of our compilers accepts x86 as a source language. Instead, we will use Compiler 3 to process Compiler 2 again. Because Compiler 3 produces efficient code, albeit inefficiently, the resulting compiler, which we will title \textbf{Compiler F} (f for \textit{fin}), will be efficient \textit{and} produce efficient code.
+\linebreak
+
+\includegraphics[scale=0.6]{4.png}
+\linebreak
+
+\newpage
+
+\section{Conclusion}
+% The next line demonstrates how to quote and cite.
+% To use quotation marks
+The adventure continues in Intro to CS, and though we have yet to fully discover the meaning and reason behind the complicated universe of computing, the exercises gave us more glimpses into it. We consolidated what we've learned under monsieur Danvy in week 2 through this exercise which exorcises some of the common misconceptions and misunderstandings that one has of the world of Computer Science. Connections with the phenomena explained in the first week are consolidated and pushed further through this exercise. 
+\linebreak \linebreak
+At the same time, we have also ventured into new territories through examining things like proof-trees, abstract-syntax trees, and specializers. We are acquainting ourselves with the fundamental principles that govern the world of computer science, which are similar to our world's laws of physics or grammar. Surprisingly, the laws that govern it can be reflected in the workings of our own world (through language and how it operates). Could this be a sign of the polymorphous nature of logic? 
+\linebreak \linebreak
+The steps we have taken are merely baby steps. They are nevertheless necessary ones, as a journey of a thousand steps starts with the first. Undoubtedly, the journey will be tough, and we will encounter even more bedazzling vocabulary. But just like how one tries to break the outer-casings of a diamond in the rough, patience and hard-work will allow us to remove all the obscurity, providing us all with clarity.  
+\linebreak \linebreak
+As a group, we hope to keep pushing our intellectual boundaries and stretching our minds until we become masters of computer science. As Bruce Lee once said, "Learning is a constant process of discovery - a process without end." It is with this spirit that we come into lecture for week 3, hoping to fully absorb the materials that will be given the next time. Winter may be coming, but our snowball is slowly, yet surely, growing into an avalanche.
+\linebreak \linebreak
+Overall, we enjoyed the exercises that were given this week to us and we cannot wait to learn from you again this Saturday. This concludes our report. With the click-clack of our wearied fingers on our keyboards, we say: \textit{à la prochaine, monsieur Danvy.}
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
+
+% Scratch code:
+
+% The following is the code for creating a photo with a caption
+% \begin{figure}[h!]
+% \centering
+% The next line of code specifies which photo to include in the figure.
+% You need to upload the photo using the menu on the left
+% and then reference the photo by its name.
+% \includegraphics[scale=1.7]{universe}
+% \caption{The Universe}
+% \label{fig:universe}
+% \end{figure}
